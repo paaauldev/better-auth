@@ -1,204 +1,129 @@
-"use client";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Search,
-  ChevronDown,
-  MoreHorizontal,
-  Eye,
-  Edit,
-  Key,
-  Ban,
-  Trash,
-} from "lucide-react";
-import {
-  Select,
-  SelectItem,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-} from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-  DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-export default function Studio() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const users = [
-    {
-      name: "Eden Hazard",
-      email: "john.doe@example.com",
-      lastSignedIn: "2 hours ago",
-      joined: "2023-05-15",
-    },
-    {
-      name: "Cold Palmer",
-      email: "john.doe@example.com",
-      lastSignedIn: "2 hours ago",
-      joined: "2023-05-15",
-    },
-    {
-      name: "Kante",
-      email: "john.doe@example.com",
-      lastSignedIn: "2 hours ago",
-      joined: "2023-05-15",
-    },
-    {
-      name: "John",
-      email: "john.doe@example.com",
-      lastSignedIn: "2 hours ago",
-      joined: "2023-05-15",
-    },
-  ];
-  const [sortBy, setSortBy] = useState("Joined");
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Package, Layers, Fingerprint } from "lucide-react";
+
+const actionCards = [
+  {
+    title: "Deploy it in a sec",
+    icon: Package,
+  },
+  {
+    title: "Manage roles at a higher level",
+    icon: Layers,
+  },
+  {
+    title: "Secure your application's backend",
+    icon: Fingerprint,
+  },
+];
+
+const stats = [
+  { title: "Total users", value: "9", subtitle: "All time" },
+  { title: "Active users", value: "1", subtitle: "September 2024" },
+  { title: "Sign-ups", value: "1", subtitle: "September 2024" },
+  { title: "Sign-ins", value: "0", subtitle: "September 2024" },
+];
+
+const recentSignUps = [
+  {
+    name: "Cold Palmer",
+    email: "kinfetare83@gmail.com",
+    time: "Sat Nov 18, 21:30",
+  },
+  {
+    name: "Eden Hazard",
+    email: "kinfetare83@gmail.com",
+    time: "Sat Nov 18, 21:30",
+  },
+  {
+    name: "Kante",
+    email: "kinfetare83@gmail.com",
+    time: "Sat Nov 18, 21:30",
+  },
+  {
+    name: "KINFISH",
+    email: "kinfetare83@gmail.com",
+    time: "Sat Nov 18, 21:30",
+  },
+];
+
+export default function OvervieewDashboard() {
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-2">Users</h1>
-      <p className="text-sm text-gray-500 mb-6">View and manage users</p>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-2">
+        Congratulations, your application has users!
+      </h1>
+      <p className="text-gray-600 mb-8">
+        Better Auth handles authentication and user management for you.{" "}
+      </p>
 
-      <div className="flex justify-between items-center mb-6">
-        <div className="relative">
-          <Input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 w-64"
-          />
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-        </div>
-        <div className="flex items-center space-x-4">
-          <span className="text-sm text-gray-500">Sort by:</span>
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[120px]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Joined">Joined</SelectItem>
-              <SelectItem value="Name">Name</SelectItem>
-              <SelectItem value="LastSignIn">Last Sign In</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button className="bg-stone-600 hover:bg-stone-700 text-white">
-            Create user
-          </Button>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {actionCards.map((card, index) => (
+          <Card
+            key={index}
+            className="cursor-pointer hover:shadow-lg transition-shadow"
+          >
+            <CardContent className="flex flex-col items-center justify-center p-6">
+              <card.icon className="w-12 h-12 mb-4 text-gray-600" />
+              <p className="text-center text-sm">{card.title}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-lg shadow">
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-gray-200">
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                User
-              </th>
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Last signed in
-              </th>
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Joined
-                <ChevronDown className="inline-block ml-1 h-4 w-4" />
-              </th>
-              <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          {!users.length ? (
-            users.map((user) => {
-              return (
-                <tbody key={user.email}>
-                  <tr className="border-b border-gray-200">
-                    <td className="py-4 px-4">
-                      <div className="flex items-center">
-                        <Avatar className="h-8 w-8 mr-3">
-                          <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="font-medium text-gray-900">
-                            {user.name}
-                          </p>
-                          <p className="text-sm text-gray-500">{user.email}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-sm text-gray-500">
-                      {user.lastSignedIn}
-                    </td>
-                    <td className="py-4 px-4 text-sm text-gray-500">
-                      {user.joined}
-                    </td>
-                    <td className="py-4 px-4">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>
-                            <Eye className="mr-2 h-4 w-4" />
-                            <span>View details</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Edit className="mr-2 h-4 w-4" />
-                            <span>Edit user</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Key className="mr-2 h-4 w-4" />
-                            <span>Reset password</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem>
-                            <Ban className="mr-2 h-4 w-4" />
-                            <span>Ban user</span>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <Trash className="mr-2 h-4 w-4" />
-                            <span>Delete user</span>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })
-          ) : (
-            <tbody>
-              <tr>
-                <td colSpan={4} className="text-center py-16">
-                  <div className="flex flex-col w-full items-center">
-                    <Avatar className="h-12 w-12 mb-4">
-                      <AvatarFallback>?</AvatarFallback>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        {stats.map((stat, index) => (
+          <Card key={index}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                {stat.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stat.value}</div>
+              <p className="text-xs text-muted-foreground">{stat.subtitle}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent sign-ups</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-4">
+              {recentSignUps.map((user, index) => (
+                <li key={index} className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Avatar className="h-8 w-8 mr-3">
+                      <AvatarFallback>
+                        {user.name.charAt(0) || user.email.charAt(0)}
+                      </AvatarFallback>
                     </Avatar>
-                    <p className="text-lg font-medium text-gray-900 mb-1">
-                      No users yet
-                    </p>
-                    <p className="text-sm text-gray-500 mb-4">
-                      Create a new user or learn how to{" "}
-                      <a href="#" className="text-stone-600 hover:underline">
-                        migrate existing users
-                      </a>
-                    </p>
-                    <Button className="bg-stone-600 hover:bg-stone-700 text-white">
-                      Create user
-                    </Button>
+                    <div>
+                      <p className="font-medium">{user.name || user.email}</p>
+                      <p className="text-sm text-gray-500">{user.email}</p>
+                    </div>
                   </div>
-                </td>
-              </tr>
-            </tbody>
-          )}
-        </table>
+                  <span className="text-sm text-gray-500">{user.time}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent sign-ins</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-center text-gray-500 py-8">
+              No recent sign-ins to show
+            </p>
+          </CardContent>
+        </Card>
       </div>
-    </main>
+    </div>
   );
 }
